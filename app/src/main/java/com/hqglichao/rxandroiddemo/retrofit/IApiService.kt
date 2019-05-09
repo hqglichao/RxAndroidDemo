@@ -1,10 +1,8 @@
 package com.hqglichao.rxandroiddemo.retrofit
 
 import com.hqglichao.rxandroiddemo.Constants
-import com.hqglichao.rxandroiddemo.model.WeatherInfo
 import com.hqglichao.rxandroiddemo.model.WeatherModel
 import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +17,7 @@ import retrofit2.http.Path
  */
 interface IApiService {
     @GET("{cityID}.html")
-    fun getWeatherInfo(@Path("cityID") cityID: String) : Single<WeatherModel.Result>
+    fun getWeatherInfo(@Path("cityID") cityID: String) : Observable<WeatherModel.Result>
     companion object {
         fun create() : IApiService {
             return Retrofit.Builder()
