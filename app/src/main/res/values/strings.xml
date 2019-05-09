@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RxAndroidDemo</string>
+    <string name="WikiSearch">WikiSearch</string>
+    <string name="wiki_result">结果: </string>
+    <string name="search_weather">查询天气</string>
+    <string name="temperature">温度: </string>
+    <string name="wind">风： </string>
+</resources>
