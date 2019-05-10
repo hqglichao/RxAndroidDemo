@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.hqglichao.rxandroiddemo.retrofit.IApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_tip_search.*
 import java.lang.StringBuilder
@@ -46,23 +47,24 @@ class WeatherActivity : AppCompatActivity() {
         //请求上海的天气：101020100
         disposable = weatherService.getWeatherInfo("101020100")
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.weatherinfo
+            }.observeOn(AndroidSchedulers.mainThread())
             .subscribe (
-                {result ->
-                    val weatherInfo = result.weatherinfo
+                {
                     val stringBuilder = StringBuilder()
-                    stringBuilder.append(weatherInfo.city)
+                    stringBuilder.append(it.city)
                         .append("\r\n")
                         .append(getString(R.string.temperature))
-                        .append(weatherInfo.temp)
+                        .append(it.temp)
                         .append("\r\n")
                         .append(getString(R.string.wind))
-                        .append(weatherInfo.WD)
+                        .append(it.WD)
                         .append(" ")
-                        .append(weatherInfo.WS)
+                        .append(it.WS)
                     tvCount.text = stringBuilder.toString()
-                },
-                {error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()}
-            )
+                }) {
+                error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+            }
     }
 }
